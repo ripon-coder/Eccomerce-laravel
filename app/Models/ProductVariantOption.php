@@ -14,12 +14,12 @@ class ProductVariantOption extends Model
     // Relationship with Variant
     public function variant()
     {
-        return $this->belongsTo(ProductVariant::class);
+        return $this->belongsTo(ProductVariant::class,'variant_id');
     }
 
     // Relationship with Attribute Option
     public function attributeOption()
     {
-        return $this->belongsTo(AttributeOption::class);
+        return $this->belongsTo(AttributeOption::class,'attribute_option_id');
     }
 }

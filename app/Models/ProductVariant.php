@@ -20,6 +20,6 @@ class ProductVariant extends Model
     // Relationship with Variant Options
     public function options()
     {
-        return $this->hasMany(ProductVariantOption::class);
+        return $this->hasMany(ProductVariantOption::class,'variant_id');
     }
 }

@@ -16,4 +16,17 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class);
     }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function brand(){
+        return $this->belongsTo(Brand::class);
+    }
+
+    protected $casts = [
+        'images' => 'array', 
+        'meta_keywords' => 'array',
+    ];
 }

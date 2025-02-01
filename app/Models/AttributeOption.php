@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AttributeOption extends Model
 {
@@ -14,6 +15,11 @@ class AttributeOption extends Model
     // Relationship with Attribute
     public function attribute()
     {
-        return $this->belongsTo(Attribute::class);
+        return $this->belongsTo(Attribute::class,'attribute_id');
+    }
+
+    public function variantOptions(): HasMany
+    {
+        return $this->hasMany(ProductVariantOption::class);
     }
 }
