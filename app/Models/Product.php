@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'category_id','brand_id','thumbnail','images','meta_title','meta_description','meta_keywords'];
+    protected $fillable = ['name', 'description', 'category_id','brand_id','thumbnail','images','slug','meta_title','meta_description','meta_keywords'];
 
     // Relationship with Variants
     public function variants()

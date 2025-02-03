@@ -25,6 +25,13 @@ class CreateProduct extends CreateRecord
                     Repeater::make('variants')
                         ->relationship()
                         ->schema(ProductResource::getProductVariant())
+                        ->columns(2)
+                        ->defaultItems(1)
+                        ->collapsed()
+                        ->cloneable()
+                        ->reorderableWithButtons()
+                        ->itemLabel(fn (array $state): ?string => $state['sku'] ?? null)
+                        ->minItems(1)
                 ]),
 
             Step::make('Product Meta')

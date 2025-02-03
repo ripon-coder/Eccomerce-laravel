@@ -19,10 +19,13 @@ return new class extends Migration
             $table->unsignedBigInteger('brand_id')->nullable(); // Foreign Key to Brand Table
             $table->string('thumbnail')->nullable();
             $table->text('images')->nullable();
+            $table->string("slug")->unique();
             $table->string('meta_title')->nullable(); // SEO Meta Title
             $table->text('meta_description')->nullable(); // SEO Meta Description
             $table->text('meta_keywords')->nullable(); // SEO Meta Keywords
+            $table->boolean("is_published")->default(true);
             $table->timestamps();
+            $table->softDeletes();
 
             // Foreign key for category
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
