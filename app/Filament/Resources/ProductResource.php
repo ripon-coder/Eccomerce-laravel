@@ -129,7 +129,7 @@ class ProductResource extends Resource
                             }
                             return AttributeOption::where('attribute_id', $attributeId)->pluck('value', 'id');
                         })
-                ])->columns(2)->columnSpanFull()
+                ])->columns(2)->minItems(1)->columnSpanFull()
         ];
     }
 
