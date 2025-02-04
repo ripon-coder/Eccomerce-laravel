@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -15,10 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    Log::info("Product updated:");
-    return view('welcome');
-});
+Route::get('/test', [HomeController::class,'test']);
 
 Route::get('/test-observer', function () {
     // Create a product

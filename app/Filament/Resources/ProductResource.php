@@ -19,6 +19,7 @@ use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
@@ -151,6 +152,9 @@ class ProductResource extends Resource
 
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+
+                ImageColumn::make('thumbnail')
+                    ->square(),
 
                 Tables\Columns\TextColumn::make('slug')
                     ->copyable()

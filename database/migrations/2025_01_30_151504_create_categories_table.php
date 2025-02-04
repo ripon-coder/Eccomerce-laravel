@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id(); // Primary Key
-            $table->string('name'); // Category Name
-            $table->string('slug')->unique(); // URL-friendly slug
-            $table->text('description')->nullable(); // Category Description
-            $table->unsignedBigInteger('parent_id')->nullable(); // Parent Category ID
-            $table->timestamps(); // Created At and Updated At
-
+            $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->timestamps();
+            $table->boolean("is_published")->default(true);
+            $table->softDeletes();
             // Foreign Key Constraint for Parent Category
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
         });

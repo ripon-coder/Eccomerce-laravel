@@ -11,11 +11,14 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Toggle;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Filters\TrashedFilter;
 use CodeWithDennis\FilamentSelectTree\SelectTree;
 use App\Filament\Resources\CategoryResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\CategoryResource\RelationManagers;
+use App\Filament\Resources\CategoryResource\RelationManagers\ProductsRelationManager;
 
 class CategoryResource extends Resource
 {
@@ -50,8 +53,11 @@ class CategoryResource extends Resource
                     })
                     ->columnSpanFull(),
 
-                Forms\Components\Textarea::make('description')
-                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('description')->columnSpanFull(),
+
+                Toggle::make('is_published')
+
+
 
             ]);
     }
@@ -64,6 +70,8 @@ class CategoryResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('parent.name')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('products_count')
+                    ->counts('products'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -72,24 +80,28 @@ class CategoryResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                    
+                Tables\Columns\IconColumn::make('is_published')->boolean(),
             ])
             ->filters([
-                //
+                TrashedFilter::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\ForceDeleteBulkAction::make(),
+                    Tables\Actions\RestoreBulkAction::make(),
+                ]),
             ])->defaultSort('id', 'desc');
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ProductsRelationManager::class
         ];
     }
 
@@ -102,3 +114,4 @@ class CategoryResource extends Resource
         ];
     }
 }
+
