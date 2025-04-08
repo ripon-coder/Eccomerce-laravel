@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name'); // Brand Name
             $table->string('slug')->unique(); // URL-friendly slug
             $table->text('description')->nullable(); // Brand Description
+            $table->boolean("is_published")->default(true);
             $table->timestamps(); // Created At and Updated At
         });
     }

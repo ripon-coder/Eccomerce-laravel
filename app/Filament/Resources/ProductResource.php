@@ -105,6 +105,7 @@ class ProductResource extends Resource
             TextInput::make('price')->numeric()->required(),
             TextInput::make('discount_price')->numeric(),
             TextInput::make('quantity')->numeric()->required(),
+            TextInput::make('weight')->label("Weight(kg)")->numeric(),
 
             Repeater::make('options')
                 ->relationship()

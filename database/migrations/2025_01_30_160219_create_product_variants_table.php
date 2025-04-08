@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('discount_price', 10, 2)->nullable(); // Price for the variant
             $table->integer('quantity')->default(0); // Stock quantity
             $table->string('image')->nullable(); // Stock quantity
+            $table->string("weight")->nullable();
             $table->timestamps();
 
             // Foreign key

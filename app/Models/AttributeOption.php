@@ -10,7 +10,7 @@ class AttributeOption extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['attribute_id', 'value'];
+    protected $fillable = ['attribute_id', 'value','others'];
 
     // Relationship with Attribute
     public function attribute()
