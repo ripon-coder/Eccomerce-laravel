@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('meta_description')->nullable(); // SEO Meta Description
             $table->text('meta_keywords')->nullable(); // SEO Meta Keywords
             $table->boolean("is_published")->default(true);
+            $table->boolean("feature_product")->default(false);
             $table->timestamps();
             $table->softDeletes();
 

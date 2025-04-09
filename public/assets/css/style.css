@@ -12386,6 +12386,7 @@ to {
     margin: 0;
     padding-right: 2rem;
     box-shadow: none;
+    margin-right: 12px;
 }
 .product-col .product-media {
     display: inline-block;

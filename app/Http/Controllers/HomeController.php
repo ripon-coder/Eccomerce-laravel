@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index(){
-        return view("front.home");
+        $data['feature_products'] = Product::where("feature_product",true)->orderBy("id","desc")->get();
+        return view("front.home",$data);
     }
 
     public function test(){

@@ -94,6 +94,7 @@ class ProductResource extends Resource
             RichEditor::make('description')->rules(['required']),
 
             Toggle::make('is_published'),
+            Toggle::make('feature_product'),
         ];
     }
 
@@ -179,6 +180,7 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\IconColumn::make('is_published')->boolean(),
+                Tables\Columns\IconColumn::make('feature_product')->boolean(),
 
             ])
             ->filters([

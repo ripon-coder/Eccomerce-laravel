@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'category_id', 'brand_id', 'thumbnail', 'images', 'slug', 'meta_title', 'meta_description', 'meta_keywords'];
+    protected $fillable = ['name', 'description', 'category_id', 'brand_id', 'thumbnail', 'images', 'slug', 'meta_title', 'meta_description', 'meta_keywords','is_published','feature_product'];
 
     // Relationship with Variants
     public function variants()

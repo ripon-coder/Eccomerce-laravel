@@ -150,9 +150,7 @@
             <div class="tab-pane p-0 fade show active" id="top-all-tab" role="tabpanel" aria-labelledby="top-all-link">
                 <div class="products">
                     <div class="row justify-content-center">
-                        @for ($i = 0; $i < 8; $i++)
                             @include('front.inc.product')
-                        @endfor
                     </div>
                 </div>
             </div>

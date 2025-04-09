@@ -1,14 +1,18 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 
 
 Route::get('/', [HomeController::class,'index']);
 Route::get('/product', [ProductController::class,'SingleProduct']);
+Route::get('/cart', [CartController::class,'cart'])->name('cart');
+Route::get('/checkout', [CheckoutController::class,'checkout'])->name('checkout');
 
 Route::get('/test-observer', function () {
     // Create a product
