@@ -1,4 +1,4 @@
-<div class="col-6 col-md-4 col-lg-3">
+<div class="product  text-center">
     <div class="product product-11 mt-v3 text-center">
         <figure class="product-media">
             <a href="/product">

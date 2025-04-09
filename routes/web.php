@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class,'index']);
+Route::get('/product', [ProductController::class,'SingleProduct']);
 
 Route::get('/test-observer', function () {
     // Create a product

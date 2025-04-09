@@ -1526,7 +1526,6 @@ h4, .h4 {
     font-weight: 500;
     font-size: 1.4rem;
     letter-spacing: -.01em;
-    padding: 3.95rem 3rem;
     text-transform: uppercase;
 }
 .menu>li+li {
@@ -4573,8 +4572,8 @@ p {
     border-bottom: 0.1rem solid rgba(235, 235, 235, 0.55);
 }
 .breadcrumb-nav .container, .breadcrumb-nav .container-fluid {
-    padding-top: 1.4rem;
-    padding-bottom: 1.4rem;
+    padding-top: 5px;
+    padding-bottom: 8px;
 }
 .breadcrumb-with-filter .container, .breadcrumb-with-filter .container-fluid {
     display: flex;
@@ -9521,7 +9520,7 @@ to {
     margin-bottom: 1rem;
 }
 .product-gallery {
-    margin-bottom: 2rem;
+    /* margin-bottom: 2rem; */
 }
 .product-main-image {
     position: relative;
@@ -9699,6 +9698,7 @@ to {
 }
 .product-details .new-price {
     margin-right: 1rem;
+    font-size: 26px;
 }
 .product-details .product-content {
     margin-bottom: 1.6rem;
@@ -9835,7 +9835,7 @@ to {
 .product-details-action .btn-cart {
     padding: 1rem 1.5rem;
     max-width: 198px;
-    color: #c96;
+    color: #fff;
     border: 0.1rem solid #c96;
 }
 .product-details-action .btn-cart span {
@@ -9864,6 +9864,12 @@ to {
     white-space: nowrap;
     align-self: stretch;
     line-height: 1.4;
+    background-color: white;
+    color: #CC9966 !important;
+}
+.details-action-wrapper>.btn-product>span{
+
+    color: #CC9966 !important;
 }
 .details-action-wrapper .btn-product:before {
     margin-right: 1rem;
@@ -12441,6 +12447,53 @@ to {
     color: #fff;
     background-color: #c96;
 }
+
+
+/* Ripon */
+
+/* Mobile View: Adjust the aspect ratio to 4:3 for mobile */
+@media (max-width: 768px) {
+    .product-main-image {
+        position: relative;
+        width: 100%;  /* Full width of the container */
+        height: 0;
+        padding-bottom: 75%; /* Aspect ratio 4:3 for mobile */
+    }
+
+    .product-main-image img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures the image covers the container while maintaining aspect ratio */
+    }
+
+    .logo {
+        margin-top: 17px;
+        margin-bottom: 18px;
+        min-height: 12px;
+    }
+
+    .product-details .product-title {
+        font-weight: 400;
+        font-size: 20px;
+        letter-spacing: -.025em;
+        margin-bottom: 1.2rem;
+        margin-top: 0px;
+        padding-right: 1rem;
+    }
+
+    .product-price {
+        font-weight: 400;
+        line-height: 1.00;
+        margin-bottom: 2px;
+    }
+}
+
+
+
+
 @media screen and (max-width: 991px) {
     .table-mobile, .table-mobile tbody, .table-mobile tr, .table-mobile td {
     width: 100% !important;
