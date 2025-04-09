@@ -15,7 +15,7 @@
             <div class="product-body">
                 <h3 class="product-title"><a href="product.html">{{$item->name}}</a></h3>
                 <div class="product-price pt-1">
-                    <span class="new-price">৳1,200</span>
+                    <span class="new-price">{{format_money()}}</span>
                     <span class="old-price"><del>৳1,000</del></span>
                 </div>
             </div>
