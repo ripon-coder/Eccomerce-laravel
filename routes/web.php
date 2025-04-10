@@ -10,7 +10,7 @@ use App\Http\Controllers\ProductController;
 
 
 Route::get('/', [HomeController::class,'index']);
-Route::get('/product', [ProductController::class,'SingleProduct']);
+Route::get('/product/{slug}', [ProductController::class,'SingleProduct'])->name('single-product');
 Route::get('/cart', [CartController::class,'cart'])->name('cart');
 Route::get('/checkout', [CheckoutController::class,'checkout'])->name('checkout');
 

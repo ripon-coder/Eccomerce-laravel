@@ -8,7 +8,5 @@
 <script src="{{ asset('assets/js/jquery.elevateZoom.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
+@yield("script")
 
-<script type="text/javascript">
-
-</script>

@@ -2,8 +2,8 @@
     <div class="col-6 col-md-4 col-lg-3">
         <div class="product product-11 mt-v3 text-center">
             <figure class="product-media">
-                <a href="/product">
-                    <img src="assets/images/demos/demo-2/products/product-12-1.jpg" alt="Product image"
+                <a href="{{route('single-product',$item->slug)}}">
+                    <img src="{{asset('storage/'.$item->thumbnail)}}" alt="{{$item->name}}"
                         class="product-image">
                 </a>
 
@@ -13,10 +13,10 @@
                 </div>
             </figure>
             <div class="product-body">
-                <h3 class="product-title"><a href="product.html">{{$item->name}}</a></h3>
+                <h3 class="product-title"><a href="{{route('single-product',$item->slug)}}">{{$item->name}}</a></h3>
                 <div class="product-price pt-1">
-                    <span class="new-price">{{format_money()}}</span>
-                    <span class="old-price"><del>৳1,000</del></span>
+                    <span class="new-price">{{@format_money($item->variants[0]->discount_price)}}</span>
+                    <span class="old-price"><del>{{@format_money($item->variants[0]->price)}}</del></span>
                 </div>
             </div>
             <div class="product-action">

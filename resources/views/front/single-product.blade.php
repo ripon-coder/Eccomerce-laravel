@@ -1,5 +1,6 @@
 @extends('front.layout.app')
 @section('content')
+
     <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
             <ol class="breadcrumb">
@@ -18,8 +19,8 @@
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
                                 <figure class="product-main-image">
-                                    <img id="product-zoom" src="assets/images/products/single/1.jpg"
-                                        data-zoom-image="assets/images/products/single/1-big.jpg" alt="product image">
+                                    <img id="product-zoom" src="{{ asset('storage/' . $product->thumbnail) }}"
+                                        data-zoom-image="{{ asset('storage/' . $product->thumbnail) }}" alt="product image">
 
                                     <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                         <i class="icon-arrows"></i>
@@ -27,54 +28,54 @@
                                 </figure><!-- End .product-main-image -->
 
                                 <div id="product-zoom-gallery" class="product-image-gallery">
-                                    <a class="product-gallery-item active" href="#"
-                                        data-image="assets/images/products/single/1-big.jpg"
-                                        data-zoom-image="assets/images/products/single/1-big.jpg">
-                                        <img src="assets/images/products/single/1-big.jpg" alt="product side">
-                                    </a>
 
-                                    <a class="product-gallery-item" href="#"
-                                        data-image="assets/images/products/single/2-big.jpg"
-                                        data-zoom-image="assets/images/products/single/2-big.jpg">
-                                        <img src="assets/images/products/single/2-big.jpg" alt="product cross">
-                                    </a>
+                                    @php
+                                        $images = is_string($product->images)
+                                            ? json_decode($product->images)
+                                            : $product->images;
+                                    @endphp
 
-                                    <a class="product-gallery-item" href="#"
-                                        data-image="assets/images/products/single/3-big.jpg"
-                                        data-zoom-image="assets/images/products/single/3-big.jpg">
-                                        <img src="assets/images/products/single/3-big.jpg" alt="product with model">
-                                    </a>
+                                    @if (is_array($images) && count($images))
+                                        @foreach ($images as $image)
+                                            <a class="product-gallery-item active" href="#"
+                                                data-image="{{ asset('storage/' . $image) }}"
+                                                data-zoom-image="{{ asset('storage/' . $image) }}">
+                                                <img src="{{ asset('storage/' . $image) }}" alt="product side">
+                                            </a>
+                                        @endforeach
+                                    @else
+                                        <p>No images found.</p>
+                                    @endif
 
-                                    <a class="product-gallery-item" href="#"
-                                        data-image="assets/images/products/single/4-big.jpg"
-                                        data-zoom-image="assets/images/products/single/4-big.jpg">
-                                        <img src="assets/images/products/single/4-big.jpg" alt="product back">
-                                    </a>
-                                </div><!-- End .product-image-gallery -->
-                            </div><!-- End .row -->
-                        </div><!-- End .product-gallery -->
-                    </div><!-- End .col-md-6 -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-md-6">
                         <div class="product-details">
-                            <h1 class="product-title">Dark yellow lace cut out swing dress</h1>
+                            <h1 class="product-title">{{ $product->name }}</h1>
                             <div class="product-price">
-                                <span class="new-price">৳1,200</span>
-                                <span class="old-price"><del>৳1,000</del></span>
-                            </div><!-- End .product-price -->
+                                <span id="new_price" class="new-price"></span> 
+                                <span id="old_price" class="old-price"><del></del></span>
+                            </div>
 
                             <div class="details-filter-row details-row-size pt-2">
                                 <label for="size">Size:</label>
                                 <div class="select-custom">
-                                    <select name="size" id="size" class="form-control">
-                                        <option value="#" selected="selected">Select a size</option>
-                                        <option value="s">Small</option>
-                                        <option value="m">Medium</option>
-                                        <option value="l">Large</option>
-                                        <option value="xl">Extra Large</option>
+                                    <select id="size-selector" onchange="updatePrice()" name="size" id="size"
+                                        class="form-control">
+                                        @if ($noSizesAvailable)
+                                            <option value="" disabled>No sizes available</option>
+                                        @else
+                                            @foreach ($sizes as $size)
+                                                <option value="{{ $size['id'] }}">{{ $size['value'] }}</option>
+                                            @endforeach
+                                        @endif
                                     </select>
-                                </div><!-- End .select-custom -->
-                            </div><!-- End .details-filter-row -->
+                                </div>
+                            </div>
 
                             <div class="details-filter-row details-row-size">
                                 <label for="qty">Qty:</label>
@@ -134,25 +135,9 @@
                     <div class="tab-pane fade show active" id="product-desc-tab" role="tabpanel"
                         aria-labelledby="product-desc-link">
                         <div class="product-desc-content">
-                            <h3>Product Information</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis
-                                eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit,
-                                posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris
-                                sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh.
-                                Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
-                            <ul>
-                                <li>Nunc nec porttitor turpis. In eu risus enim. In vitae mollis elit. </li>
-                                <li>Vivamus finibus vel mauris ut vehicula.</li>
-                                <li>Nullam a magna porttitor, dictum risus nec, faucibus sapien.</li>
-                            </ul>
-
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis
-                                eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit,
-                                posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris
-                                sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh.
-                                Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
-                        </div><!-- End .product-desc-content -->
-                    </div><!-- .End .tab-pane -->
+                            {!! $product->description !!}
+                        </div>
+                    </div>
 
                     <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel"
                         aria-labelledby="product-shipping-link">
@@ -207,3 +192,49 @@
     </div><!-- End .page-content -->
     </main><!-- End .main -->
 @endsection
+@section('script')
+<script>
+    const variants = @json($product->variants);
+    const defaultVariant = @json($product->variants->first());
+    const defaultPrice = defaultVariant?.discount_price || defaultVariant?.price || "0.00";
+
+    function formatCurrency(value) {
+        return '৳' + Number(value).toLocaleString('en-BD', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+    }
+
+    function updatePrice() {
+        const sizeId = parseInt(document.getElementById('size-selector')?.value);
+        const priceEl = document.getElementById('new_price');
+        const oldPriceEl = document.getElementById('old_price');
+
+        let matched = null;
+
+        for (const variant of variants) {
+            if (variant.options.some(option => option.attribute_option_id == sizeId)) {
+                matched = variant;
+                break;
+            }
+        }
+
+        if (matched) {
+            const discount = matched.discount_price || matched.price; // Use discount price if available, else regular price
+            const regular = matched.price;
+
+            priceEl.textContent = formatCurrency(discount);
+
+            // Always show the original price
+            oldPriceEl.textContent = formatCurrency(regular);
+        } else {
+            // No match, show default price
+            priceEl.textContent = formatCurrency(defaultPrice);
+            oldPriceEl.textContent = formatCurrency(defaultPrice);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', updatePrice);
+</script>
+@endsection
+

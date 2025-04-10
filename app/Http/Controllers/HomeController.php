@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index(){
-        $data['feature_products'] = Product::where("feature_product",true)->orderBy("id","desc")->get();
+        $data['feature_products'] = Product::with('variants')->where("feature_product",true)->orderBy("id","desc")->get();
         return view("front.home",$data);
     }
 
