@@ -28,6 +28,7 @@
     <!-- Main CSS File -->
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/demos/demo-4.css') }}">
+     @yield("stylesheet")
 </head>
 
 <body>

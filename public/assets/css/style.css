@@ -12449,6 +12449,44 @@ to {
     background-color: #c96;
 }
 
+img.lazyload {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    will-change: opacity;
+}
+
+img.lazyloaded {
+    opacity: 1;
+}
+
+.spinner-border {
+    width: 1rem;
+    height: 1rem;
+    border: 0.15em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border .75s linear infinite;
+    padding: 5px;
+}
+
+@keyframes spinner-border {
+    to { transform: rotate(360deg); }
+}
+#remaining-quantity-container {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+#remaining-quantity {
+    font-weight: bold;
+    color: #28a745; /* Green for available stock */
+}
+
+#remaining-quantity-container.low-stock #remaining-quantity {
+    color: #dc3545; /* Red for low stock */
+}
+
 
 /* Ripon */
 

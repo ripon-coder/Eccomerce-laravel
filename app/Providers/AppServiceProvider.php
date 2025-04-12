@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Models\Product;
 use App\Observers\ProductObserver;
+use Illuminate\Support\Facades\View;
+use App\View\Composers\HeaderComposer;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,7 +23,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //Product::observe(ProductObserver::class);
-
+        View::composer('front.inc.header-cart', HeaderComposer::class);
     }
 }

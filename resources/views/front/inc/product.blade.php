@@ -2,16 +2,20 @@
     <div class="col-6 col-md-4 col-lg-3">
         <div class="product product-11 mt-v3 text-center">
             <figure class="product-media">
-                <a href="{{route('single-product',$item->slug)}}">
-                    <img src="{{asset('storage/'.$item->thumbnail)}}" alt="{{$item->name}}"
-                        class="product-image">
+                <a href="{{ route('single-product', $item->slug) }}">
+                    <img 
+                        data-src="{{ asset('storage/' . $item->thumbnail) }}" 
+                        alt="{{ $item->name }}" 
+                        class="product-image lazyload">
                 </a>
-
+            
                 <div class="product-action-vertical">
-                    <a href="#" class="btn-product-icon btn-wishlist "><span>add to
-                            wishlist</span></a>
+                    <a href="#" class="btn-product-icon btn-wishlist">
+                        <span>add to wishlist</span>
+                    </a>
                 </div>
             </figure>
+            
             <div class="product-body">
                 <h3 class="product-title"><a href="{{route('single-product',$item->slug)}}">{{$item->name}}</a></h3>
                 <div class="product-price pt-1">
