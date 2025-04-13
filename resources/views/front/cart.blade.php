@@ -1,98 +1,95 @@
 @extends('front.layout.app')
+
 @section('content')
-    <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
-        <div class="container">
-            <h1 class="page-title">Shopping Cart<span>Shop</span></h1>
-        </div><!-- End .container -->
-    </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Shop</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
             </ol>
-        </div><!-- End .container -->
-    </nav><!-- End .breadcrumb-nav -->
+        </div>
+    </nav>
 
     <div class="page-content">
         <div class="cart">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-9">
-                        <table class="table table-cart table-mobile">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                        @if (count($cartItems) > 0)
+                            <form action="{{ route('cart.update') }}" method="POST" id="cart-update-form">
+                                @csrf
+                                <table class="table table-cart table-mobile">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($cartItems as $item)
+                                            <tr>
+                                                <td class="product-col">
+                                                    <div class="product">
+                                                        <figure class="product-media">
+                                                            <a href="{{ route('single-product', $item['product']->slug) }}">
+                                                                <img class="lazyload"
+                                                                    data-src="{{ '/storage/' . $item['image'] }}"
+                                                                    alt="{{ $item['product']->name }}">
+                                                            </a>
+                                                        </figure>
+                                                        <h3 class="product-title">
+                                                            {{ $item['product']->name }} ({{ $item['size'] }})
+                                                        </h3>
+                                                    </div>
+                                                </td>
+                                                <td class="price-col">
+                                                    ৳{{ number_format($item['variant']->discount_price ?? $item['variant']->price, 2) }}
+                                                </td>
+                                                <td class="quantity-col">
+                                                    <div class="cart-product-quantity">
+                                                        <input type="number"
+                                                            name="cart[{{ $item['variant']->id }}][quantity]"
+                                                            class="form-control update-quantity"
+                                                            value="{{ $item['quantity'] }}" min="1">
+                                                    </div>
+                                                </td>
+                                                <td class="total-col">৳{{ number_format($item['subtotal'], 2) }}</td>
+                                                <td class="remove-col">
+                                                    <button type="button" class="btn-remove"
+                                                        onclick="confirmRemove({{ $item['variant']->id }})">
+                                                        <i class="icon-close"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
 
-                            <tbody>
-                                <tr>
-                                    <td class="product-col">
-                                        <div class="product">
-                                            <figure class="product-media">
-                                                <a href="#">
-                                                    <img src="assets/images/products/table/product-1.jpg"
-                                                        alt="Product image">
-                                                </a>
-                                            </figure>
+                                <div class="cart-bottom">
+                                    <button type="submit" class="btn btn-outline-dark-2 update-cart-btn">
+                                        <span>UPDATE CART</span><i class="icon-refresh"></i>
+                                    </button>
+                                </div>
+                            </form>
 
-                                            <h3 class="product-title">
-                                                <a href="#">Beige knitted elastic runner shoes</a>
-                                            </h3><!-- End .product-title -->
-                                        </div><!-- End .product -->
-                                    </td>
-                                    <td class="price-col">$84.00</td>
-                                    <td class="quantity-col">
-                                        <div class="cart-product-quantity">
-                                            <input type="number" class="form-control" value="1" min="1"
-                                                max="10" step="1" data-decimals="0" required>
-                                        </div><!-- End .cart-product-quantity -->
-                                    </td>
-                                    <td class="total-col">$84.00</td>
-                                    <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="product-col">
-                                        <div class="product">
-                                            <figure class="product-media">
-                                                <a href="#">
-                                                    <img src="assets/images/products/table/product-2.jpg"
-                                                        alt="Product image">
-                                                </a>
-                                            </figure>
+                            {{-- Hidden Remove Forms --}}
+                            @foreach ($cartItems as $item)
+                                <form id="remove-form-{{ $item['variant']->id }}"
+                                    action="{{ route('cart.remove', $item['variant']->id) }}" method="POST"
+                                    style="display: none;">
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                            @endforeach
+                        @else
+                            <p>Your cart is empty.</p>
+                        @endif
+                    </div>
 
-                                            <h3 class="product-title">
-                                                <a href="#">Blue utility pinafore denim dress</a>
-                                            </h3><!-- End .product-title -->
-                                        </div><!-- End .product -->
-                                    </td>
-                                    <td class="price-col">$76.00</td>
-                                    <td class="quantity-col">
-                                        <div class="cart-product-quantity">
-                                            <input type="number" class="form-control" value="1" min="1"
-                                                max="10" step="1" data-decimals="0" required>
-                                        </div><!-- End .cart-product-quantity -->
-                                    </td>
-                                    <td class="total-col">$76.00</td>
-                                    <td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table><!-- End .table table-wishlist -->
-
-                        <div class="cart-bottom">
-
-                            <a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i
-                                    class="icon-refresh"></i></a>
-                        </div><!-- End .cart-bottom -->
-                    </div><!-- End .col-lg-9 -->
                     <aside class="col-lg-3">
                         <div class="summary summary-cart">
                             <h3 class="summary-title">Cart Total</h3><!-- End .summary-title -->
@@ -101,51 +98,33 @@
                                 <tbody>
                                     <tr class="summary-subtotal">
                                         <td>Subtotal:</td>
-                                        <td>$160.00</td>
+                                        <td>৳{{ number_format($total, 2) }}</td>
                                     </tr><!-- End .summary-subtotal -->
+
                                     <tr class="summary-shipping">
                                         <td>Shipping:</td>
-                                        <td>&nbsp;</td>
+                                        <td><span id="shipping-cost">৳0</span></td>
                                     </tr>
+                                    @foreach ($shipping_charge as $charge)
+                                        <tr class="summary-shipping-row">
+                                            <td>
+                                                <div class="custom-control custom-radio">
+                                                    <input @checked($shipping_id == $charge->id) type="radio"
+                                                        id="shipping-{{ $charge->id }}" name="shipping"
+                                                        class="custom-control-input" value="{{ $charge->id }}"
+                                                        data-amount="{{ $charge->charge }}">
+                                                    <label class="custom-control-label"
+                                                        for="shipping-{{ $charge->id }}">{{ $charge->title }}</label>
+                                                </div>
+                                            </td>
+                                            <td>৳{{ $charge->charge }}</td>
+                                        </tr>
+                                    @endforeach
 
-                                    <tr class="summary-shipping-row">
-                                        <td>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="free-shipping" name="shipping"
-                                                    class="custom-control-input">
-                                                <label class="custom-control-label" for="free-shipping">Free
-                                                    Shipping</label>
-                                            </div><!-- End .custom-control -->
-                                        </td>
-                                        <td>$0.00</td>
-                                    </tr><!-- End .summary-shipping-row -->
-
-                                    <tr class="summary-shipping-row">
-                                        <td>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="standart-shipping" name="shipping"
-                                                    class="custom-control-input">
-                                                <label class="custom-control-label"
-                                                    for="standart-shipping">Standart:</label>
-                                            </div><!-- End .custom-control -->
-                                        </td>
-                                        <td>$10.00</td>
-                                    </tr><!-- End .summary-shipping-row -->
-
-                                    <tr class="summary-shipping-row">
-                                        <td>
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="express-shipping" name="shipping"
-                                                    class="custom-control-input">
-                                                <label class="custom-control-label" for="express-shipping">Express:</label>
-                                            </div><!-- End .custom-control -->
-                                        </td>
-                                        <td>$20.00</td>
-                                    </tr><!-- End .summary-shipping-row -->
 
                                     <tr class="summary-total">
                                         <td>Total:</td>
-                                        <td>$160.00</td>
+                                        <td>৳<span id="total-price">{{ number_format($total, 2) }}</span></td>
                                     </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->
@@ -157,8 +136,45 @@
                         <a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE
                                 SHOPPING</span><i class="icon-refresh"></i></a>
                     </aside><!-- End .col-lg-3 -->
-                </div><!-- End .row -->
-            </div><!-- End .container -->
-        </div><!-- End .cart -->
-    </div><!-- End .page-content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Confirmation Script --}}
+    <script>
+        function confirmRemove(variantId) {
+            if (confirm('Are you sure you want to remove this item from your cart?')) {
+                document.getElementById('remove-form-' + variantId).submit();
+            }
+        }
+
+        const shippingRadios = document.querySelectorAll('input[name="shipping"]');
+        const subtotal = parseFloat('{{ $total }}');
+
+        shippingRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const shippingId = this.value;
+
+                fetch("{{ route('cart.updateShipping') }}", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({
+                            shipping_id: shippingId
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.shipping_cost)
+
+                    })
+                    .catch(error => {
+                        console.error("Error updating shipping:", error);
+                    });
+            });
+        });
+    </script>
 @endsection

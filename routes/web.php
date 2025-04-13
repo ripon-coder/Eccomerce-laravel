@@ -15,13 +15,13 @@ Route::get('/', [HomeController::class, 'index']);
 //Product Controller
 Route::get('/product/{slug}', [ProductController::class, 'SingleProduct'])->name('single-product');
 Route::get('/get-remaining-quantity', [ProductController::class, 'getRemainingQuantity'])->name("get-ramaining-quantity");
-
-Route::get('/cart/header', function (){
-    return view('front.inc.header-cart'); 
-})->name('cart.header');
-
-
+//Cart Controller
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'Cart'])->name('cart');
+Route::delete('/cart/remove/{id}', [CartController::class, 'CartRemove'])->name('cart.remove');
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::post('/cart/update-shipping', [CartController::class, 'updateShipping'])->name('cart.updateShipping');
+//Checkout Controller
 Route::get('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 Route::get('/test-observer', function () {
