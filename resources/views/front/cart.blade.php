@@ -100,15 +100,16 @@
                                         <td>Subtotal:</td>
                                         <td>৳{{ number_format($total, 2) }}</td>
                                     </tr><!-- End .summary-subtotal -->
-
                                     <tr class="summary-shipping">
                                         <td>Shipping:</td>
-                                        <td><span id="shipping-cost">৳0</span></td>
+                                        <td><span
+                                                id="shipping-cost">৳{{ number_format($shipping_charge_saved_from->charge ?? 0, 2) }}</span>
+                                        </td>
                                     </tr>
                                     @foreach ($shipping_charge as $charge)
                                         <tr class="summary-shipping-row">
                                             <td>
-                                                <div class="custom-control custom-radio">
+                                                <div class="custom-control custom-radio ">
                                                     <input @checked($shipping_id == $charge->id) type="radio"
                                                         id="shipping-{{ $charge->id }}" name="shipping"
                                                         class="custom-control-input" value="{{ $charge->id }}"
@@ -120,11 +121,16 @@
                                             <td>৳{{ $charge->charge }}</td>
                                         </tr>
                                     @endforeach
-
-
+                                    <tr class="summary-gapped">
+                                        <td colspan="2" style="height: 14px">
+                                            <div class="gap"></div> <!-- Adjust the gap here -->
+                                        </td>
+                                    </tr>
                                     <tr class="summary-total">
                                         <td>Total:</td>
-                                        <td>৳<span id="total-price">{{ number_format($total, 2) }}</span></td>
+                                        <td>৳<span
+                                                id="total-price">{{ number_format($total + ($shipping_charge_saved_from->charge ?? 0), 2) }}</span>
+                                        </td>
                                     </tr><!-- End .summary-total -->
                                 </tbody>
                             </table><!-- End .table table-summary -->
@@ -168,7 +174,10 @@
                     })
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data.shipping_cost)
+                        document.getElementById('shipping-cost').textContent = '৳' + parseFloat(data
+                            .shipping_cost).toFixed(2);
+                        document.getElementById('total-price').textContent = '' + Number(data
+                            .total_price).toFixed(2);
 
                     })
                     .catch(error => {

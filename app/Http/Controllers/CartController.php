@@ -60,6 +60,7 @@ class CartController extends Controller
                 $product = \App\Models\Product::find($item['product_id']);
                 $variant = \App\Models\ProductVariant::find($item['variant_id']);
 
+
                 if ($product && $variant) {
                     // Calculate the price and subtotal
                     $price = $variant->discount_price ?? $variant->price;
@@ -81,10 +82,12 @@ class CartController extends Controller
             }
         }
         $shipping_charge = ShippingCharge::where("is_published", true)->get();
+        $shipping_charge_saved_from = $shipping_charge->firstWhere('id', $shipping_id);
         // Return the view with cart items and total
         return view('front.cart', [
             'cartItems' => $items,
             'shipping_charge' => $shipping_charge,
+            'shipping_charge_saved_from' => $shipping_charge_saved_from,
             'shipping_id' => $shipping_id,
             'total' => $total
         ]);
@@ -107,12 +110,18 @@ class CartController extends Controller
                 // Save the updated cart back to session
                 session()->put('cart', $cart);
 
+                // ✅ If the cart is now empty, forget the shipping_id
+                if (empty($cart)) {
+                    session()->forget('shipping_id');
+                }
+
                 return redirect()->back()->with('success', 'Item removed from cart.');
             }
         }
 
         return redirect()->back()->with('error', 'Item not found in cart.');
     }
+
 
     public function updateCart(Request $request)
     {

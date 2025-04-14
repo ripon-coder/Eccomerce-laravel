@@ -4,7 +4,7 @@ FROM php:8.2-fpm
 # Set working directory
 WORKDIR /var/www
 
-# Install system dependencies
+# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip intl  # Install intl extension
 
 # Install Redis extension
 RUN pecl install redis \

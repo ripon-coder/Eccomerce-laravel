@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('attribute_id'); // Foreign key to attributes
             $table->string('value'); // e.g., "S", "M", "L" for size
-            $table->string('others')->nullable; // e.g., "S", "M", "L" for size
+            $table->string('others')->nullable(); // e.g., "S", "M", "L" for size
             $table->timestamps();
 
             // Foreign key
